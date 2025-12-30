@@ -29,14 +29,12 @@ def delete_user(name):
 
 @app.route("/update/<name>", methods=["POST"])
 def update_user(name):
-    # Get the new role from the form
     new_role = request.form.get("new_role")
     
-    # Loop through the fridge to find the person
     for person in all_users:
         if person["name"] == name:
-            person["role"] = new_role # Change the data!
-            break # We found them, so we can stop looking
+            person["role"] = new_role 
+            break 
             
     return redirect(url_for("home"))
 
