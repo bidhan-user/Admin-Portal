@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Manager</title>
+    <style>
+        body { font-family: sans-serif; margin: 40px; background-color: #f4f4f4; }
+        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        input { margin-bottom: 10px; display: block; padding: 8px; }
+        button { background-color: #007bff; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h1>User Directory</h1>
+        
+        <ul>
+            {% for person in users %}
+                <li><strong>{{ person.name }}</strong> - {{ person.role }}</li>
+            {% endfor %}
+        </ul>
+
+        <hr>
+
+        <h3>Add New User</h3>
+        <form action="/add" method="POST">
+            <input type="text" name="name" placeholder="Name" required>
+            <input type="text" name="role" placeholder="Role (e.g. Member)" required>
+            <button type="submit">Add to List</button>
+        </form>
+    </div>
+    <ul>
+        {% for person in users %}
+            <li>
+                <li>
+                    <strong>{{ person.name }}</strong> - {{ person.role }}
+                
+                    <form action="/update/{{ person.name }}" method="POST" style="display:inline;">
+                        <input type="text" name="new_role" placeholder="New Role" style="display:inline; width:80px; padding:2px;">
+                        <button type="submit" style="background-color:orange; color:white; border:none; padding:3px 7px; border-radius:3px;">Update</button>
+                    </form>
+                
+                    <form action="/delete/{{ person.name }}" method="POST" style="display:inline;">
+                        <button type="submit" style="background-color:red; color:white; border:none; padding:3px 7px; border-radius:3px;">Delete</button>
+                    </form>
+                </li>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <p>There are currently {{ users|length }} users in the system.</p>
+
+</body>
+</html>
